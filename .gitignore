@@ -5,6 +5,8 @@
 *.json
 !pyproject.json
 !package.json
+!tsconfig*.json
+!vite.config.ts
 
 # Python
 __pycache__/
@@ -47,8 +49,23 @@ ENV/
 htmlcov/
 .pytest_cache/
 
+# Client / Frontend
+client/node_modules
+client/dist
+client/dist-ssr
+client/*.local
+client/logs
+client/.npm
+client/coverage
+client/.env*.local
+
 # Logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
 # Local development
 *.sqlite3
