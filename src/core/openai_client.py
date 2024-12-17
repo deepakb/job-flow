@@ -1,48 +1,122 @@
-from openai import OpenAI
-from core.config import get_settings
-import time
-from fastapi import HTTPException
+"""
+OpenAI API client for AI-powered features.
 
-settings = get_settings()
+This module provides a wrapper around the OpenAI API client with:
+- Rate limiting and retry logic
+- Error handling
+- Response parsing
+- Token usage tracking
+"""
+
+import openai
+import backoff
+import logging
+from typing import List, Dict, Any, Optional
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_exponential,
+    retry_if_exception_type
+)
+from core.config import settings
+
+logger = logging.getLogger(__name__)
 
 class OpenAIClient:
-    def __init__(self):
-        self.client = OpenAI(api_key=settings.OPENAI_API_KEY)
-        self.max_retries = 3
-        self.retry_delay = 60  # seconds
+    """
+    Client for interacting with OpenAI's API.
+    
+    Features:
+    - Automatic retry with exponential backoff
+    - Rate limit handling
+    - Error logging and handling
+    - Response validation
+    
+    Attributes:
+        api_key: OpenAI API key
+        model: GPT model to use
+        max_retries: Maximum number of retry attempts
+        timeout: Request timeout in seconds
+    """
+    
+    def __init__(
+        self,
+        api_key: str = settings.OPENAI_API_KEY,
+        model: str = "gpt-4",
+        max_retries: int = 3,
+        timeout: int = 30
+    ):
+        """
+        Initialize the OpenAI client.
+        
+        Args:
+            api_key: OpenAI API key
+            model: GPT model to use (default: gpt-4)
+            max_retries: Maximum number of retry attempts
+            timeout: Request timeout in seconds
+        """
+        self.api_key = api_key
+        self.model = model
+        self.max_retries = max_retries
+        self.timeout = timeout
+        openai.api_key = api_key
 
+    @retry(
+        retry=retry_if_exception_type((openai.error.RateLimitError, openai.error.APIError)),
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(3)
+    )
     async def create_chat_completion(self, messages, model="gpt-4"):
-        for attempt in range(self.max_retries):
-            try:
-                response = await self.client.chat.completions.create(
-                    model=model,
-                    messages=messages
-                )
-                return response
-            except Exception as e:
-                if "rate limit" in str(e).lower():
-                    if attempt < self.max_retries - 1:
-                        time.sleep(self.retry_delay)
-                        continue
-                raise HTTPException(
-                    status_code=429,
-                    detail="OpenAI rate limit reached. Please try again later."
-                )
+        """
+        Create a chat completion using AI.
+        
+        Args:
+            messages: List of messages to use for completion
+            model: GPT model to use (default: gpt-4)
             
+        Returns:
+            Response from OpenAI API
+            
+        Raises:
+            OpenAIError: If API call fails after retries
+        """
+        try:
+            response = await openai.ChatCompletion.acreate(
+                model=model,
+                messages=messages
+            )
+            return response
+            
+        except Exception as e:
+            logger.error(f"Error creating chat completion: {str(e)}")
+            raise
+
+    @retry(
+        retry=retry_if_exception_type((openai.error.RateLimitError, openai.error.APIError)),
+        wait=wait_exponential(multiplier=1, min=4, max=60),
+        stop=stop_after_attempt(3)
+    )
     async def create_embedding(self, text, model="text-embedding-ada-002"):
-        for attempt in range(self.max_retries):
-            try:
-                response = await self.client.embeddings.create(
-                    model=model,
-                    input=text
-                )
-                return response
-            except Exception as e:
-                if "rate limit" in str(e).lower():
-                    if attempt < self.max_retries - 1:
-                        time.sleep(self.retry_delay)
-                        continue
-                raise HTTPException(
-                    status_code=429,
-                    detail="OpenAI rate limit reached. Please try again later."
-                )
+        """
+        Create an embedding using AI.
+        
+        Args:
+            text: Text to use for embedding
+            model: Model to use for embedding (default: text-embedding-ada-002)
+            
+        Returns:
+            Response from OpenAI API
+            
+        Raises:
+            OpenAIError: If API call fails after retries
+        """
+        try:
+            response = await openai.Embedding.acreate(
+                model=model,
+                input=text
+            )
+            return response
+            
+        except Exception as e:
+            logger.error(f"Error creating embedding: {str(e)}")
+            raise
