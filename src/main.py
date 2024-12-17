@@ -1,7 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from core.config import get_settings
-from api import users, resumes, jobs
+from src.core.config import get_settings
+from src.core.exceptions import setup_exception_handlers
+from src.core.rate_limit import RateLimitMiddleware
+from src.api import users, resumes, jobs
 from fastapi.openapi.utils import get_openapi
 
 settings = get_settings()
@@ -38,6 +40,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add rate limiting
+app.add_middleware(RateLimitMiddleware)
+
+# Setup exception handlers
+setup_exception_handlers(app)
 
 # Include routers
 app.include_router(

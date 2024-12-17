@@ -1,12 +1,33 @@
-version: '3.8'
-
 services:
   api:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - ./src:/app/src
+      - ./uploads:/app/uploads
     environment:
-      - PYTHONPATH=/app/src
+      - PYTHONPATH=/app/src:${PYTHONPATH:-}
+      - PYTHONUNBUFFERED=1
+      - PROJECT_NAME=JobFlow
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-here}
+      - BACKEND_CORS_ORIGINS=["http://localhost:3000"]
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - FIREBASE_CREDENTIALS=/app/firebase-credentials.json
+      - FIREBASE_WEB_API_KEY=${FIREBASE_WEB_API_KEY:-dummy-api-key}
+      - DEBUG=true
+      - API_V1_STR=/api/v1
+      - ACCESS_TOKEN_EXPIRE_MINUTES=30
+      - OPENAI_MODEL=gpt-4
+      - OPENAI_MAX_TOKENS=2000
+      - UPLOAD_DIR=/app/uploads
+      - MAX_UPLOAD_SIZE=5242880
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
     command: poetry run uvicorn src.main:app --host 0.0.0.0 --port 8000 --reload
