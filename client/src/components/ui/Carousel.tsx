@@ -59,7 +59,7 @@ export function Carousel({
         <div className="flex touch-pan-y">
           {slides.map((slide, index) => (
             <div
-              className="flex-[0_0_100%] min-w-0 relative pl-4"
+              className="flex-[0_0_100%] min-w-0 relative pr-4 first:pl-0"
               key={index}
             >
               <div className="bg-white/5 dark:bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-gray-200/10 dark:border-white/10">
