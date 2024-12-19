@@ -22,21 +22,21 @@ export const Navbar = () => {
             <div className="hidden md:flex items-center gap-6">
               <a
                 href="#features"
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text transition-colors relative group"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text dark:hover:text-transparent transition-colors relative group"
               >
                 Features
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
               </a>
               <a
                 href="#pricing"
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text transition-colors relative group"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text dark:hover:text-transparent transition-colors relative group"
               >
                 Pricing
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
               </a>
               <a
                 href="#about"
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text transition-colors relative group"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text dark:hover:text-transparent transition-colors relative group"
               >
                 About
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
@@ -48,7 +48,7 @@ export const Navbar = () => {
             <div className="hidden md:flex items-center gap-6">
               <a
                 href="#login"
-                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text transition-colors relative group"
+                className="text-sm text-gray-600 dark:text-gray-400 hover:text-transparent hover:bg-gradient-primary hover:bg-clip-text dark:hover:text-transparent transition-colors relative group"
               >
                 Login
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all group-hover:w-full"></span>
