@@ -47,9 +47,9 @@ export const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 rounded-full mb-8 bg-gradient-to-r from-primary-500/20 to-secondary-500/20 dark:from-primary-500/30 dark:to-secondary-500/30 p-3 backdrop-blur-sm border border-primary-500/20 dark:border-primary-500/30"
+            className="relative inline-flex items-center gap-2 rounded-full mb-8 p-[2px] bg-gradient-to-r from-[#3366FF] to-[#00B3A6]"
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-gray-950">
               <div className="w-8 h-8 rounded-full bg-gradient-primary flex items-center justify-center">
                 <RocketIcon className="w-4 h-4 text-white" />
               </div>
@@ -92,6 +92,7 @@ export const HeroSection = () => {
           >
             <Button
               size="lg"
+              rounded
               className="bg-gradient-primary text-white font-medium hover:shadow-lg transition-shadow min-w-[160px]"
               onClick={() => console.log('Get Started clicked')}
             >
@@ -99,8 +100,9 @@ export const HeroSection = () => {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-900 min-w-[160px]"
+              variant="gradient-border"
+              rounded
+              className="min-w-[160px]"
               onClick={() => console.log('Learn More clicked')}
             >
               Learn More

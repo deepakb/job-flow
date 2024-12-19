@@ -2,13 +2,15 @@ import { forwardRef } from 'react';
 import { motion, HTMLMotionProps } from 'framer-motion';
 import { cn } from '../../utils/cn';
 
-interface ButtonProps extends HTMLMotionProps<"button"> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
+interface ButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'gradient-border';
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  children: React.ReactNode;
+  rounded?: boolean;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,16 +22,21 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     isLoading = false,
     leftIcon,
     rightIcon,
+    rounded = false,
     className,
     ...props 
   }, ref) => {
-    const baseStyles = "inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]";
+    const baseStyles = cn(
+      "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed active:scale-[0.98]",
+      rounded ? "rounded-full" : "rounded-lg"
+    );
     
     const variants = {
       primary: "bg-gradient-primary text-white shadow-sm hover:shadow-md hover:opacity-90 focus:ring-primary-main",
       secondary: "bg-white text-primary-main border-2 border-primary-main hover:bg-primary-main hover:text-white focus:ring-primary-main",
       outline: "bg-transparent border-2 border-neutral-light hover:border-primary-main focus:ring-primary-main",
       ghost: "bg-transparent hover:bg-neutral-light/50 focus:ring-neutral-light",
+      'gradient-border': "relative bg-gradient-to-r from-[#3366FF] to-[#00B3A6]",
     };
 
     const sizes = {
@@ -37,6 +44,41 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       md: "px-6 py-3 text-base gap-2",
       lg: "px-8 py-4 text-lg gap-2.5",
     };
+
+    if (variant === 'gradient-border') {
+      const contentPadding = {
+        sm: "px-4 py-[6px]",
+        md: "px-6 py-[10px]",
+        lg: "px-8 py-[14px]",
+      };
+
+      return (
+        <motion.button
+          ref={ref}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className={cn(
+            baseStyles,
+            variants[variant],
+            "p-[2px]",
+            fullWidth && "w-full",
+            className
+          )}
+          {...props}
+        >
+          <span className={cn(
+            "inline-flex items-center justify-center w-full bg-white dark:bg-gray-950 text-gray-900 dark:text-white hover:bg-gray-50 dark:hover:bg-gray-900",
+            rounded ? "rounded-full" : "rounded-lg",
+            contentPadding[size],
+            size === 'sm' ? 'text-sm gap-1.5' : size === 'md' ? 'text-base gap-2' : 'text-lg gap-2.5'
+          )}>
+            {leftIcon && <span className="mr-2">{leftIcon}</span>}
+            {children}
+            {rightIcon && <span className="ml-2">{rightIcon}</span>}
+          </span>
+        </motion.button>
+      );
+    }
 
     return (
       <motion.button
@@ -79,9 +121,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           </>
         ) : (
           <>
-            {leftIcon && <span className="inline-flex">{leftIcon}</span>}
+            {leftIcon && <span className="mr-2">{leftIcon}</span>}
             {children}
-            {rightIcon && <span className="inline-flex">{rightIcon}</span>}
+            {rightIcon && <span className="ml-2">{rightIcon}</span>}
           </>
         )}
       </motion.button>

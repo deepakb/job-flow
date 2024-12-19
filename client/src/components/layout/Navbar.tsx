@@ -1,6 +1,7 @@
 import { Button } from "../ui/Button";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { Container } from "../ui/Container";
+import Logo from "../ui/Logo";
 
 export const Navbar = () => {
   return (
@@ -8,8 +9,16 @@ export const Navbar = () => {
       <Container>
         <nav className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <a href="/" className="text-xl font-black bg-gradient-primary bg-clip-text text-transparent">
-              JobFlow
+            <a href="/" className="flex items-center gap-2">
+              <Logo 
+                width={30} 
+                height={30} 
+                className="w-[30px] h-[30px]" 
+                animate={true}
+              />
+              <span className="text-xl font-black bg-gradient-primary bg-clip-text text-transparent">
+                JobFlow
+              </span>
             </a>
             <div className="hidden md:flex items-center gap-6">
               <a
@@ -47,6 +56,7 @@ export const Navbar = () => {
               </a>
               <Button
                 size="sm"
+                rounded
                 className="bg-gradient-primary text-white font-medium hover:shadow-lg transition-shadow"
               >
                 Get Started

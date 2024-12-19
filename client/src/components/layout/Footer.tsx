@@ -1,4 +1,5 @@
 import { Container } from "../ui/Container";
+import Logo from "../ui/Logo";
 import {
   TwitterLogoIcon,
   LinkedInLogoIcon,
@@ -62,7 +63,8 @@ export const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="col-span-2 md:col-span-1">
-            <a href="/" className="inline-block mb-4">
+            <a href="/" className="inline-flex items-center gap-2 mb-4">
+              <Logo className="w-6 h-6" />
               <span className="text-xl font-black bg-gradient-primary bg-clip-text text-transparent">
                 JobFlow
               </span>

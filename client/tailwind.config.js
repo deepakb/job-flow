@@ -36,6 +36,9 @@ export default {
         'gradient-primary': 'linear-gradient(90deg, #3366FF 0%, #00B3A6 100%)',
         'gradient-background': 'linear-gradient(180deg, #F4F4F4 0%, #FFFFFF 100%)',
       },
+      borderImage: {
+        'gradient-primary': 'linear-gradient(90deg, #3366FF 0%, #00B3A6 100%) 1',
+      },
     },
   },
   plugins: [],

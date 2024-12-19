@@ -7,7 +7,7 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Software Engineer",
     company: "Tech Solutions Inc.",
-    image: "/testimonials/sarah.jpg",
+    image: "https://randomuser.me/api/portraits/women/1.jpg",
     content: "JobFlow's AI-powered matching system helped me land my dream job at a top tech company. The process was seamless and the recommendations were spot-on!",
     rating: 5,
   },
@@ -15,7 +15,7 @@ const testimonials = [
     name: "Michael Chen",
     role: "Product Manager",
     company: "Innovation Labs",
-    image: "/testimonials/michael.jpg",
+    image: "https://randomuser.me/api/portraits/men/2.jpg",
     content: "The personalized job recommendations and instant application feature saved me countless hours. I secured multiple interviews within weeks!",
     rating: 5,
   },
@@ -23,7 +23,7 @@ const testimonials = [
     name: "Emily Rodriguez",
     role: "Marketing Director",
     company: "Creative Minds",
-    image: "/testimonials/emily.jpg",
+    image: "https://randomuser.me/api/portraits/women/3.jpg",
     content: "What sets JobFlow apart is their attention to detail in matching candidates with the right opportunities. Their platform is truly revolutionary.",
     rating: 5,
   },
@@ -107,11 +107,15 @@ export const TestimonialsSection = () => {
                 {/* Author */}
                 <div className="flex items-center mt-auto">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 p-[2px] mr-4">
-                    <div className="w-full h-full rounded-full overflow-hidden">
+                    <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=3366FF&color=fff`;
+                        }}
                       />
                     </div>
                   </div>
@@ -138,31 +142,59 @@ export const TestimonialsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.4 }}
-          className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="mt-20 bg-gradient-to-r from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 rounded-2xl px-8 py-6 border border-gray-200 dark:border-gray-800"
         >
-          <div className="bg-white dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-800 text-center">
-            <h3 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-              95%
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Success Rate
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-800 text-center">
-            <h3 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-              10k+
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Happy Users
-            </p>
-          </div>
-          <div className="bg-white dark:bg-gray-900 rounded-xl p-8 border border-gray-200 dark:border-gray-800 text-center">
-            <h3 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent mb-2">
-              30+
-            </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Partner Companies
-            </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+              className="relative group flex flex-col items-center justify-center min-h-[80px] text-center"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-none">
+                  95%
+                </span>
+                <span className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-tight">
+                  Success Rate
+                </span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="relative group flex flex-col items-center justify-center min-h-[80px] text-center"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-none">
+                  10k+
+                </span>
+                <span className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-tight">
+                  Happy Users
+                </span>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.7 }}
+              className="relative group flex flex-col items-center justify-center min-h-[80px] text-center"
+            >
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent leading-none">
+                  30+
+                </span>
+                <span className="text-sm text-gray-600 dark:text-gray-400 font-medium leading-tight">
+                  Partner Companies
+                </span>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </Container>
