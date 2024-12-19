@@ -5,14 +5,12 @@ interface LogoProps {
   className?: string;
   width?: number;
   height?: number;
-  animate?: boolean;
 }
 
 const Logo: React.FC<LogoProps> = ({ 
   className = '', 
   width = 201, 
   height = 225,
-  animate = true
 }) => {
   return (
     <motion.svg

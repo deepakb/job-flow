@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import {
   RocketIcon,
@@ -90,7 +89,7 @@ export const FeaturesSection = () => {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}
@@ -121,23 +120,6 @@ export const FeaturesSection = () => {
             </motion.div>
           ))}
         </div>
-
-        {/* CTA Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="text-center"
-        >
-          <Button
-            size="lg"
-            onClick={() => console.log('Try Now button clicked')}
-            className="bg-gradient-primary text-white font-medium hover:shadow-lg transition-shadow"
-          >
-            Try Now
-          </Button>
-        </motion.div>
       </Container>
     </section>
   );

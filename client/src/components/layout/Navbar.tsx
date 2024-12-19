@@ -14,7 +14,6 @@ export const Navbar = () => {
                 width={30} 
                 height={30} 
                 className="w-[30px] h-[30px]" 
-                animate={true}
               />
               <span className="text-xl font-black bg-gradient-primary bg-clip-text text-transparent">
                 JobFlow
