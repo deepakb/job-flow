@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
+import { AspectRatio } from "@/components/ui/AspectRatio";
 import { StarFilledIcon, QuoteIcon } from "@radix-ui/react-icons";
 
 const testimonials = [
@@ -105,25 +106,25 @@ export const TestimonialsSection = () => {
                 </div>
 
                 {/* Author */}
-                <div className="flex items-center mt-auto">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 p-[2px] mr-4">
-                    <div className="w-full h-full rounded-full overflow-hidden bg-white dark:bg-gray-900">
+                <div className="flex items-start gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                    <AspectRatio ratio={1} className="rounded-full">
                       <img
                         src={testimonial.image}
                         alt={testimonial.name}
-                        className="w-full h-full object-cover"
+                        className="object-cover w-full h-full"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(testimonial.name)}&background=3366FF&color=fff`;
                         }}
                       />
-                    </div>
+                    </AspectRatio>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900 dark:text-white">
+                  <div className="flex flex-col">
+                    <h3 className="text-base font-semibold text-gray-900 dark:text-white leading-snug">
                       {testimonial.name}
-                    </h4>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">
                       {testimonial.role} at {testimonial.company}
                     </p>
                   </div>
